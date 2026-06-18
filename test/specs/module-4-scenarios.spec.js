@@ -2,6 +2,7 @@ import { assert, chaiExpect } from '../helpers/chai.js';
 import HomePage from '../pageobjects/home.page.js';
 import ProductPage from '../pageobjects/product.page.js';
 import CartPage from '../pageobjects/cart.page.js'
+import RegisterPage from '../pageobjects/register.page.js';
 
 describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 task', () => {
     const searchTerm = 'Combination Pliers';
@@ -61,7 +62,7 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
         chaiExpect(prices).to.deep.equal(sortedPrices);
     });
 
-    // Scenario 3
+    // Scenario 3:
     // Customer can add a product to the basket and change quantity
     it('[Scenario 3][Chai Expect] should add Thor Hammer to basket and change quantity to 2', async() => {
         const productName = 'Thor Hammer';
@@ -90,5 +91,33 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
         chaiExpect(cartProductTitle.trim()).to.equal(productName);
         chaiExpect(cartQuantity).to.equal(quantity);
         chaiExpect(actualTotalPrice).to.equal(expectedTotalPrice);
+    });
+
+    // Scenario 4:
+    // Customer can create a new account
+    it('[Scenario 4][Chai Expect] should create a new customer account', async () => {
+        const email = `testuser${Date.now()}@mail.com`;
+
+        const customer = {
+            firstName: 'Test',
+            lastName: 'User',
+            dateOfBirth: '1995-05-20',
+            country: 'Romania',
+            postalCode: '010101',
+            houseNumber: '12',
+            street: 'Test Street',
+            city: 'Bucharest',
+            state: 'Bucharest',
+            phone: '0712345678',
+            email,
+            password: `StrongTest${Date.now()}!Aa`
+        };
+
+        await RegisterPage.open();
+        await RegisterPage.registerNewCustomer(customer);
+        await RegisterPage.waitForRedirectToLoginPage();
+
+        const currentUrl = await browser.getUrl();
+        chaiExpect(currentUrl).to.include('/auth/login');
     });
 });
