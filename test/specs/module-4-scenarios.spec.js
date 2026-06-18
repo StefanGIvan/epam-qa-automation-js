@@ -10,6 +10,8 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
         await HomePage.open();
     });
 
+    // Smoke test - verifies that the Toolshop home page loads correctly
+    // and that at least one product is displayed in the catalog
     it('[Chai Assert] should display the product catalog on the Home page', async () => {
         const title = await browser.getTitle();
 
@@ -21,7 +23,9 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
         assert.isAbove(products.length, 0, 'Expected at least one product to be displayed');
     });
 
-    it(`[Chai Should] should show products matching the exact search term "${searchTerm}"`, async () => {
+    // Scenario 1:
+    // Customer can search for an exact product and view its details
+    it(`[Scenario 1][Chai Should + Expect] should search for "${searchTerm}" and view its product details`, async () => {
         await HomePage.searchForProduct(searchTerm);
 
         const products = await HomePage.productCards;
@@ -29,9 +33,7 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
 
         products.length.should.be.greaterThan(0);
         firstProductName.should.include(searchTerm);
-    });
 
-    it(`[Chai Expect] should show details for "${productName}"`, async () => {
         await HomePage.openProductByName(productName);
 
         const actualProductName = await ProductPage.productName.getText();
