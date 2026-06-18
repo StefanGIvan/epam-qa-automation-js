@@ -1,3 +1,6 @@
+// Page Object for the Toolshop home page
+// Contains selectors and actions related to product catalog, search, filtering, and sorting
+
 class HomePage {
     get productCards() {
             return $$('[data-test="product-name"]');

@@ -1,3 +1,6 @@
+// Page Object for product details page
+// Contains selectors and actions related to viewing product details and adding products to the cart
+
 class ProductPage {
     get productName() {
         return $('[data-test="product-name"]');

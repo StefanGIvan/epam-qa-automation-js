@@ -1,3 +1,6 @@
+// Page Object for the registration page
+// Contains selectors and actions needed to create a new customer account
+
 class RegisterPage {
     get firstNameInput() {
         return $('[data-test="first-name"]');

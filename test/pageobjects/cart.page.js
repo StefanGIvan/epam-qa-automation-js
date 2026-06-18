@@ -1,3 +1,6 @@
+// Page Object for the cart page
+// Contains selectors and actions related to basket product details, quantity, and line price
+
 class CartPage {
     get productTitle() {
         return $('[data-test="product-title"]');
