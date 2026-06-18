@@ -1,6 +1,7 @@
 import { assert, chaiExpect } from '../helpers/chai.js';
 import HomePage from '../pageobjects/home.page.js';
 import ProductPage from '../pageobjects/product.page.js';
+import CartPage from '../pageobjects/cart.page.js'
 
 describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 task', () => {
     const searchTerm = 'Combination Pliers';
@@ -27,6 +28,7 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
     // Customer can search for an exact product and view its details
     it(`[Scenario 1][Chai Should + Expect] should search for "${searchTerm}" and view its product details`, async () => {
         await HomePage.searchForProduct(searchTerm);
+        await HomePage.waitForProductWithName(productName);
 
         const products = await HomePage.productCards;
         const firstProductName = await products[0].getText();
@@ -43,5 +45,50 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
         chaiExpect(actualProductName).to.equal(productName);
         chaiExpect(isPriceDisplayed).to.be.true;
         chaiExpect(isDescriptionDisplayed).to.be.true;
+    });
+
+    // Scenario 2:
+    // Customer can filter and sort products on the main page
+    it('[Scenario 2][Chai Expect] should filter Hand Tools and sort products by prices low to high', async () => {
+        await HomePage.filterByHandTools();
+        await HomePage.sortByPricesLowToHigh();
+        await HomePage.waitForPricesToBeSortedLowToHigh();
+
+        const prices = await HomePage.getProductPrices();
+        const sortedPrices = [...prices].sort((a, b) => a - b);
+
+        chaiExpect(prices.length).to.be.greaterThan(0);
+        chaiExpect(prices).to.deep.equal(sortedPrices);
+    });
+
+    // Scenario 3
+    // Customer can add a product to the basket and change quantity
+    it('[Scenario 3][Chai Expect] should add Thor Hammer to basket and change quantity to 2', async() => {
+        const productName = 'Thor Hammer';
+        const quantity = '2';
+        const unitPrice = 11.14;
+        const expectedTotalPrice = unitPrice * Number(quantity);
+
+        await HomePage.searchForProduct(productName);
+        await HomePage.waitForProductWithName(productName);
+        await HomePage.openProductByName(productName);
+
+        await ProductPage.addToCart();
+
+        await browser.pause(1000);
+
+        await CartPage.open();
+        await CartPage.quantityInput.waitForDisplayed({ timeout: 15000 });
+
+        await CartPage.changeQuantity(quantity);
+        await CartPage.waitForLinePrice(expectedTotalPrice);
+
+        const cartProductTitle = await CartPage.getProductTitle();
+        const cartQuantity = await CartPage.getQuantity();
+        const actualTotalPrice = await CartPage.getLinePrice();
+
+        chaiExpect(cartProductTitle.trim()).to.equal(productName);
+        chaiExpect(cartQuantity).to.equal(quantity);
+        chaiExpect(actualTotalPrice).to.equal(expectedTotalPrice);
     });
 });

@@ -10,6 +10,15 @@ class ProductPage {
     get productDescription() {
         return $('[data-test="product-description"]');
     }
+
+    get addToCartButton() {
+        return $('[data-test="add-to-cart"]');
+    }
+
+    async addToCart() {
+        await this.addToCartButton.waitForDisplayed();
+        await this.addToCartButton.click();
+    }
 }
 
 export default new ProductPage();
