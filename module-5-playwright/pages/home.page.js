@@ -4,9 +4,6 @@ class HomePage {
 
         this.searchInput = page.locator('[data-test="search-query"]');
         this.searchButton = page.locator('[data-test="search-submit"]');
-        this.productName = page.locator('[data-test="product-name"]');
-        this.productPrices = page.locator('[data-test="product-price"]');
-        this.sortDropdown = page.locator('[data-test="sort"]');
     }
 
     async open() {
@@ -19,24 +16,12 @@ class HomePage {
     }
 
     async openProduct(productName) {
-        await this.page.getByText(productName, { exact: true }).click();
-    }
-
-    async filterByCategory(categoryName) {
-        await this.page.getByText(categoryName).check();
-    }
-
-    async sortByPriceLowToHigh() {
-        await this.sortDropdown.selectOption('price,asc');
-    }
-
-    async getProductPrices() {
-        const prices = await this.productPrices.allTextContents();
-
-        return prices.map((price) => 
-            Number(price.replace('$', '').trim())
-        );
-    }
+        await this.page
+        // RegExp because the full link name may be not the exact product name
+        .getByRole('link', { name: new RegExp(productName) })
+        .first()
+        .click();
+}
 }
 
-module.exports = { HomePage }; 
+module.exports = { HomePage };
