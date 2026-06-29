@@ -4,6 +4,9 @@ class HomePage {
 
         this.searchInput = page.locator('[data-test="search-query"]');
         this.searchButton = page.locator('[data-test="search-submit"]');
+
+        this.sortDropdown = page.locator('[data-test="sort"]');
+        this.productPrices = page.locator('.card [data-test="product-price"]');
     }
 
     async open() {
@@ -22,6 +25,22 @@ class HomePage {
         .first()
         .click();
 }
+
+    async filterByCategory(categoryName) {
+        await this.page.getByRole('checkbox', { name: categoryName }).check();
+    }
+
+    async sortByPriceLowToHigh() {
+        await this.sortDropdown.selectOption({ label: 'Price (Low - High)' });
+    }
+
+    async getProductPrices() {
+        const prices = await this.productPrices.allTextContents();
+
+        return prices.map((price) =>
+        Number(price.replace('$', '').trim())
+        );
+    }
 }
 
 module.exports = { HomePage };
