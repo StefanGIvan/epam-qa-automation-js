@@ -23,10 +23,17 @@ class ProductPage {
         }
 
         async addToCart() {
-            await this.page.locator('[data-test="add-to-cart"]').click();
+            const addToCartButton = this.page.locator('[data-test="add-to-cart"]');
+            const cartLink = this.page.locator('[data-test="nav-cart"]');
 
-            // The cart icon appears only after a product is added.
-            await this.page.locator('[data-test="nav-cart"]').waitFor({ state: 'visible' });
+            await addToCartButton.click();
+
+            try {
+                await cartLink.waitFor({ state: 'visible', timeout: 10000 });
+            } catch {
+                await addToCartButton.click();
+                await cartLink.waitFor({ state: 'visible', timeout: 10000 });
+            }
         }
 
         async addProductToCartWithQuantity(quantity) {
