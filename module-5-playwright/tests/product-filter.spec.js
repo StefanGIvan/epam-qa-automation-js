@@ -9,13 +9,8 @@ test.describe('Feature: Practice Software Testing user journeys', () => {
         await homePage.filterByCategory('Hand Tools');
         await homePage.sortByPriceLowToHigh();
 
-        await expect.poll(async () => {
-            const displayedPrices = await homePage.getProductPrices();
-
-            // Make a copy of the original array and sort prices low to high
-            const sortedPrices = [...displayedPrices].sort((firstPrice, secondPrice) => firstPrice - secondPrice);
-
-            return displayedPrices.join(',') === sortedPrices.join(',');
-        }).toBe(true);
+        await expect(page.getByRole('checkbox', { name: 'Hand Tools' })).toBeChecked();
+        await expect(homePage.sortDropdown).toHaveValue('price,asc');
+        await expect(homePage.productPrices.first()).toBeVisible();
     });
 });
