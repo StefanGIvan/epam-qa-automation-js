@@ -1,16 +1,19 @@
-const { test, expect } = require('@playwright/test');
-const { HomePage } = require('../pages/home.page');
+const { test, expect } = require('../fixtures/pages.fixtures');
+const { filters } = require('../test-data/test-data');
 
 test.describe('Feature: Practice Software Testing user journeys', () => {
-    test('Scenario: Customer can filter and sort products on the main page', async ({ page }) => {
-        const homePage = new HomePage(page);
+    test('Scenario: Customer can filter and sort products on the main page', async ({
+        page,
+        homePage,
+    }) => {
+        const filter = filters.handTools;
 
         await homePage.open();
-        await homePage.filterByCategory('Hand Tools');
+        await homePage.filterByCategory(filter.categoryName);
         await homePage.sortByPriceLowToHigh();
 
-        await expect(page.getByRole('checkbox', { name: 'Hand Tools' })).toBeChecked();
-        await expect(homePage.sortDropdown).toHaveValue('price,asc');
+        await expect(homePage.categoryCheckbox(filter.categoryName)).toBeChecked();
+        await expect(homePage.sortDropdown).toHaveValue(filter.sortValue);
         await expect(homePage.productPrices.first()).toBeVisible();
     });
 });

@@ -1,20 +1,19 @@
-const { test, expect } = require('@playwright/test');
-const { HomePage } = require('../pages/home.page');
-const { ProductPage } = require('../pages/product.page');
+const { test, expect } = require('../fixtures/pages.fixtures');
+const { products } = require('../test-data/test-data');
 
 test.describe('Feature: Practice Software Testing user journeys', () => {
-    test('Scenario: Customer can search for an exact product and view its details', async ({ page }) => {
-        const homePage = new HomePage(page);
-        const productPage = new ProductPage(page);
-
-        const productName = 'Combination Pliers';
+    test('Scenario: Customer can search for an exact product and view its details', async ({
+        homePage,
+        productPage,
+    }) => {
+        const product = products.combinationPliers;
 
         await homePage.open();
-        await homePage.searchForProduct(productName);
-        await homePage.openProduct(productName);
+        await homePage.searchForProduct(product.name);
+        await homePage.openProduct(product.name);
 
-        await expect(productPage.productTitle(productName)).toBeVisible();
-        await expect(productPage.productPrice('$14.15')).toBeVisible();
-        await expect(productPage.productDescription('Versatile combination pliers designed for gripping, bending, and cutting wire with ease.')).toBeVisible();
+        await expect(productPage.productTitle(product.name)).toBeVisible();
+        await expect(productPage.productPrice(product.price)).toBeVisible();
+        await expect(productPage.productDescription(product.description)).toBeVisible();
     });
 });

@@ -30,6 +30,10 @@ class HomePage {
         await this.page.getByRole('checkbox', { name: categoryName }).check();
     }
 
+    categoryCheckbox(categoryName) {
+        return this.page.getByRole('checkbox', { name: categoryName });
+    }
+
     async sortByPriceLowToHigh() {
         await this.sortDropdown.selectOption({ label: 'Price (Low - High)' });
     }
