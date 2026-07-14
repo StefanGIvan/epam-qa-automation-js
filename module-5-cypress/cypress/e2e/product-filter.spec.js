@@ -1,12 +1,14 @@
+const homePage = require('../pages/home.page')
+
 describe('Product filter and sort', () => {
-    it('Scenario: customer can filter hand tools and sort products by price low to high', () => {
-        cy.visit('/')
+  it('Scenario: customer can filter hand tools and sort products by price low to high', () => {
+    homePage.visit()
 
-        cy.get('[data-test="nav-categories"]').click()
-        cy.get('[data-test="nav-hand-tools"]').click()
-        cy.get('[data-test="sort"]').select('price,asc')
+    homePage.openCategoriesMenu()
+    homePage.openHandToolsCategory()
+    homePage.sortByPriceLowToHigh()
 
-        cy.get('[data-test="product-name"]').should('have.length.greaterThan', 0)
-        cy.get('[data-test="sort"]').should('have.value', 'price,asc')
-    })
+    homePage.getProductNames().should('have.length.greaterThan', 0)
+    homePage.getSortDropdown().should('have.value', 'price,asc')
+  })
 })

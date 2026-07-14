@@ -1,24 +1,21 @@
+const homePage = require('../pages/home.page')
+const productPage = require('../pages/product.page')
+const cartPage = require('../pages/cart.page')
+
 describe('Basket', () => {
   it('Scenario: customer can add a product to the basket and change quantity', () => {
-    cy.visit('/')
+    const productName = 'Combination Pliers'
 
-    cy.get('[data-test="search-query"]').type('Combination Pliers')
-    cy.get('[data-test="search-submit"]').click()
+    homePage.visit()
+    homePage.searchForProduct(productName)
+    homePage.openProduct(productName)
 
-    cy.get('[data-test="product-name"]')
-      .contains('Combination Pliers')
-      .click()
+    productPage.assertProductPageIsOpened(productName)
+    productPage.addToCart()
 
-    cy.url().should('include', '/product/')
-    cy.contains('h1', 'Combination Pliers').should('be.visible')
-
-    cy.contains(/add to cart/i).click()
-
-    cy.get('[data-test="nav-cart"]').click()
-
-    cy.contains('Combination Pliers').should('be.visible')
-
-    cy.get('[data-test="product-quantity"]').clear().type('2')
-    cy.get('[data-test="product-quantity"]').should('have.value', '2')
+    cartPage.open()
+    cartPage.assertProductIsInCart(productName)
+    cartPage.changeQuantity('2')
+    cartPage.assertQuantityIs('2')
   })
 })

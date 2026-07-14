@@ -1,13 +1,17 @@
+const homePage = require('../pages/home.page')
+const productPage = require('../pages/product.page')
+
 describe('Product search', () => {
   it('Scenario: customer can search for an exact product and view its details', () => {
-    cy.visit('/');
+    const productName = 'Combination Pliers'
 
-    cy.get('[data-test="search-query"]').type('Combination Pliers');
-    cy.get('[data-test="search-submit"]').click();
+    homePage.visit()
+    homePage.searchForProduct(productName)
+    homePage.openProduct(productName)
 
-    cy.contains('Combination Pliers').click();
+    productPage.assertProductPageIsOpened(productName)
 
-    cy.contains('Combination Pliers').should('be.visible');
-    cy.get('body').should('contain.text', '$');
+    cy.contains('$14.15').should('be.visible')
+    cy.contains('Versatile combination pliers').should('be.visible')
   })
 })
