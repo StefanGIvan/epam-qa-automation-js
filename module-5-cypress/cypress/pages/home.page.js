@@ -22,9 +22,9 @@ class HomePage {
     cy.get('[data-test="nav-hand-tools"]').click()
   }
 
-  sortByPriceLowToHigh() {
-    cy.get('[data-test="sort"]').select('price,asc')
-  }
+  sortBy(sortValue) {
+  cy.get('[data-test="sort"]').select(sortValue)
+}
 
   getProductNames() {
     return cy.get('[data-test="product-name"]')

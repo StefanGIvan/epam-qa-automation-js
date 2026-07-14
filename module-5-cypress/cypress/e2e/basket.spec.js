@@ -1,21 +1,22 @@
 const homePage = require('../pages/home.page')
 const productPage = require('../pages/product.page')
 const cartPage = require('../pages/cart.page')
+const { products, cart } = require('../data/test-data')
 
 describe('Basket', () => {
   it('Scenario: customer can add a product to the basket and change quantity', () => {
-    const productName = 'Combination Pliers'
+    const product = products.combinationPliers
 
     homePage.visit()
-    homePage.searchForProduct(productName)
-    homePage.openProduct(productName)
+    homePage.searchForProduct(product.name)
+    homePage.openProduct(product.name)
 
-    productPage.assertProductPageIsOpened(productName)
+    productPage.assertProductPageIsOpened(product.name)
     productPage.addToCart()
 
     cartPage.open()
-    cartPage.assertProductIsInCart(productName)
-    cartPage.changeQuantity('2')
-    cartPage.assertQuantityIs('2')
+    cartPage.assertProductIsInCart(product.name)
+    cartPage.changeQuantity(cart.quantity)
+    cartPage.assertQuantityIs(cart.quantity)
   })
 })

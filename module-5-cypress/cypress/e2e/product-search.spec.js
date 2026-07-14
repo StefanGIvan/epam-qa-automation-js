@@ -1,17 +1,18 @@
 const homePage = require('../pages/home.page')
 const productPage = require('../pages/product.page')
+const { products } = require('../data/test-data')
 
 describe('Product search', () => {
   it('Scenario: customer can search for an exact product and view its details', () => {
-    const productName = 'Combination Pliers'
+    const product = products.combinationPliers
 
     homePage.visit()
-    homePage.searchForProduct(productName)
-    homePage.openProduct(productName)
+    homePage.searchForProduct(product.name)
+    homePage.openProduct(product.name)
 
-    productPage.assertProductPageIsOpened(productName)
+    productPage.assertProductPageIsOpened(product.name)
 
-    cy.contains('$14.15').should('be.visible')
-    cy.contains('Versatile combination pliers').should('be.visible')
+    cy.contains(product.price).should('be.visible')
+    cy.contains(product.description).should('be.visible')
   })
 })
