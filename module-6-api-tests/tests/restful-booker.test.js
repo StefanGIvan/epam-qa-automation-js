@@ -1,87 +1,107 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const {
-    createToken,
-    createBooking,
-    getBooking,
-    updateBooking,
-    deleteBooking,
-} = require('../helpers/api-client');
-
-const {
-    assertStatus,
-    assertHeaderContains,
-    assertBookingBody,
-} = require('../helpers/assertions');
+const { AuthApi } = require('../api/auth.api');
+const { BookingApi } = require('../api/booking.api');
 
 const {
     authData,
     bookingData,
-    updatedBookingData,
+    updateBookingData,
 } = require('../test-data/booking.data');
+
+const authApi = new AuthApi();
+const bookingApi = new BookingApi();
 
 let token;
 let bookingId;
 
-test('Scenario: create a token and reuse it for authenticated requests', async () => {
-    const response = await createToken(authData);
+function expectJsonContentType(response) {
+    const contentType = response.headers.get('content-type');
+
+    assert.ok(
+        contentType && contentType.includes('application/json'),
+        `Expected content-type to include application/json, but got ${contentType}`
+    );
+}
+
+function expectTextContentType(response) {
+    const contentType = response.headers.get('content-type');
+
+    assert.ok(
+        contentType && contentType.includes('text/plain'),
+        `Expected content-type to include text/plain, but got ${contentType}`
+    );
+}
+
+function expectBookingToMatch(actualBooking, expectedBooking) {
+    assert.equal(actualBooking.firstname, expectedBooking.firstname);
+    assert.equal(actualBooking.lastname, expectedBooking.lastname);
+    assert.equal(actualBooking.totalprice, expectedBooking.totalprice);
+    assert.equal(actualBooking.depositpaid, expectedBooking.depositpaid);
+    assert.equal(actualBooking.bookingdates.checkin, expectedBooking.bookingdates.checkin);
+    assert.equal(actualBooking.bookingdates.checkout, expectedBooking.bookingdates.checkout);
+    assert.equal(actualBooking.additionalneeds, expectedBooking.additionalneeds);
+}
+
+test('Scenario: API client can create an auth token', async () => {
+    const response = await authApi.createToken(authData);
     const body = await response.json();
 
-    assertStatus(response, 200);
-    assertHeaderContains(response, 'content-type', 'application/json');
+    assert.equal(response.status, 200);
+    expectJsonContentType(response);
 
-    assert.ok(body.token, 'Expected response body to contain token');
+    assert.ok(body.token, 'Expect response body to contain token');
     assert.equal(typeof body.token, 'string');
 
     token = body.token;
 });
 
-test('Scenario: create a booking with valid customer data', async() => {
-    const response = await createBooking(bookingData);
+test('Scenario: API client can create a booking with valid booking data', async () => {
+    const response = await bookingApi.createBooking(bookingData);
     const body = await response.json();
 
-    assertStatus(response, 200);
-    assertHeaderContains(response, 'content-type', 'application/json');
+    assert.equal(response.status, 200);
+    expectJsonContentType(response);
 
-    assert.ok(body.bookingid, 'Expected response body to contain bookingId');
+    assert.ok(body.bookingid, 'Expected response body to contain bookingid');
     assert.equal(typeof body.bookingid, 'number');
-    assertBookingBody(body.booking, bookingData);
+    expectBookingToMatch(body.booking, bookingData);
 
     bookingId = body.bookingid;
 });
 
-test('Scenario: get created booking by id', async () => {
+test ('Scenario: API client can get a created booking by id', async () => {
     assert.ok(bookingId, 'Booking ID should exist before getting booking');
 
-    const response = await getBooking(bookingId);
+    const response = await bookingApi.getBookingById(bookingId);
     const body = await response.json();
 
-    assertStatus(response, 200);
-    assertHeaderContains(response, 'content-type', 'application/json');
-    assertBookingBody(body, bookingData);
+    assert.equal(response.status, 200);
+    expectJsonContentType(response);
+    expectBookingToMatch(body, bookingData);
 });
 
-test('Scenario: update an existing booking', async () => {
+test('Scenario: API client can update an existing booking', async () => {
     assert.ok(token, 'Token should exist before updating booking');
     assert.ok(bookingId, 'Booking ID should exist before updating booking');
 
-    const response = await updateBooking(bookingId, token, updatedBookingData);
+    const response = await bookingApi.updateBooking(bookingId, token, updateBookingData);
     const body = await response.json();
 
-    assertStatus(response, 200);
-    assertHeaderContains(response, 'content-type', 'application/json');
-    assertBookingBody(body, updatedBookingData);
+    assert.equal(response.status, 200);
+    expectJsonContentType(response);
+    expectBookingToMatch(body, updateBookingData);
 });
 
-test('Scenario: delete an existing booking', async () => {
+test('Scenario: API client can delete an existing booking', async () => {
     assert.ok(token, 'Token should exist before deleting booking');
     assert.ok(bookingId, 'Booking ID should exist before deleting booking');
 
-    const response = await deleteBooking(bookingId, token);
+    const response = await bookingApi.deleteBooking(bookingId, token);
     const body = await response.text();
 
-    assertStatus(response, 201);
-    assertHeaderContains(response, 'content-type', 'text/plain');
+    assert.equal(response.status, 201);
+    expectTextContentType(response);
     assert.equal(body, 'Created');
 });

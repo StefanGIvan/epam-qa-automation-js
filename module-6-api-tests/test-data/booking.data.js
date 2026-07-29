@@ -10,7 +10,7 @@ const bookingData = {
     additionalneeds: 'Breakfast',
 };
 
-const updatedBookingData = {
+const updateBookingData = {
     firstname: 'StefanUpdated',
     lastname: 'IvanUpdated',
     totalprice: 350,
@@ -29,6 +29,6 @@ const authData = {
 
 module.exports = {
     bookingData,
-    updatedBookingData,
+    updateBookingData,
     authData,
 };
