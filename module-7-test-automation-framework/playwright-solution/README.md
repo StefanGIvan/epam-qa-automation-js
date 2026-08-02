@@ -1,6 +1,6 @@
 # Module 7 - Test Automation Framework
 
-This module refactors the previous Playwright with design patterns.
+This module refactors the previous Playwright task with design patterns.
 
 ## Principles applied
 
