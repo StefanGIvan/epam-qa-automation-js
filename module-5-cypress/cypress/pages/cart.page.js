@@ -1,19 +1,19 @@
 class CartPage {
-  open() {
-    cy.get('[data-test="nav-cart"]').click()
-  }
+    open() {
+        cy.get('[data-test="nav-cart"]').click();
+    }
 
-  assertProductIsInCart(productName) {
-    cy.contains(productName).should('be.visible')
-  }
+    assertProductIsInCart(productName) {
+        cy.contains(productName).should('be.visible');
+    }
 
-  changeQuantity(quantity) {
-    cy.get('[data-test="product-quantity"]').clear().type(quantity)
-  }
+    changeQuantity(quantity) {
+        cy.get('[data-test="product-quantity"]').clear().type(quantity);
+    }
 
-  assertQuantityIs(quantity) {
-    cy.get('[data-test="product-quantity"]').should('have.value', quantity)
-  }
+    assertQuantityIs(quantity) {
+        cy.get('[data-test="product-quantity"]').should('have.value', quantity);
+    }
 }
 
-module.exports = new CartPage()
+module.exports = new CartPage();

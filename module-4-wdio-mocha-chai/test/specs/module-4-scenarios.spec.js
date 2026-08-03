@@ -5,7 +5,7 @@
 import { assert, chaiExpect } from '../helpers/chai.js';
 import HomePage from '../pageobjects/home.page.js';
 import ProductPage from '../pageobjects/product.page.js';
-import CartPage from '../pageobjects/cart.page.js'
+import CartPage from '../pageobjects/cart.page.js';
 import RegisterPage from '../pageobjects/register.page.js';
 
 describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 task', () => {
@@ -49,7 +49,7 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
             state: 'Bucharest',
             phone: '0712345678',
             email,
-            password: `StrongTest${Date.now()}!Aa`
+            password: `StrongTest${Date.now()}!Aa`,
         };
 
         await RegisterPage.open();
@@ -102,7 +102,7 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
     // Scenario 6:
     // Customer adds a product to the basket and updates the quantity
     // The test verifies the product title, selected quantity, and calculated line price
-    it('[Scenario 3][Chai Expect] should add Thor Hammer to basket and change quantity to 2', async() => {
+    it('[Scenario 3][Chai Expect] should add Thor Hammer to basket and change quantity to 2', async () => {
         const productName = 'Thor Hammer';
         const quantity = '2';
         const unitPrice = 11.14;
@@ -129,5 +129,5 @@ describe('Module 2 scenarios automated with WDIO, Mocha and Chai for Module 4 ta
         chaiExpect(cartProductTitle.trim()).to.equal(productName);
         chaiExpect(cartQuantity).to.equal(quantity);
         chaiExpect(actualTotalPrice).to.equal(expectedTotalPrice);
-    }); 
+    });
 });

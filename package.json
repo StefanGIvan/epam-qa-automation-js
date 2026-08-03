@@ -1,0 +1,30 @@
+{
+    "name": "epam-qa-automation",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint:prettier": "prettier . --check",
+        "lint:eslint": "eslint .",
+        "lint": "npm run lint:prettier && npm run lint:eslint",
+        "format": "prettier . --write"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/StefanGIvan/epam-qa-automation-js.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/StefanGIvan/epam-qa-automation-js/issues"
+    },
+    "homepage": "https://github.com/StefanGIvan/epam-qa-automation-js#readme",
+    "description": "",
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.8.0",
+        "globals": "^17.9.0",
+        "prettier": "^3.9.6"
+    }
+}

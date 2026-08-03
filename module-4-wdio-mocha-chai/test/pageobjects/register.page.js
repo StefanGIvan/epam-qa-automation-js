@@ -66,7 +66,7 @@ class RegisterPage {
         await this.dobInput.setValue(customer.dateOfBirth);
         await this.countrySelect.selectByVisibleText(customer.country);
         await this.postalCodeInput.setValue(customer.postalCode);
-        await this. houseNumberInput.setValue(customer.houseNumber);
+        await this.houseNumberInput.setValue(customer.houseNumber);
         await this.streetInput.setValue(customer.street);
         await this.cityInput.setValue(customer.city);
         await this.stateInput.setValue(customer.state);
@@ -85,7 +85,7 @@ class RegisterPage {
             },
             {
                 timeout: 15000,
-                timeoutMsg: 'Expected user to be redirected to the login page after registration'
+                timeoutMsg: 'Expected user to be redirected to the login page after registration',
             }
         );
     }

@@ -1,0 +1,82 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+            - module-10-quality-gates
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    quality-checks:
+        name: Code quality checks
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+
+            - name: Install root dependencies
+              run: npm ci
+
+            - name: Run Prettier
+              run: npm run lint:prettier
+
+            - name: Run ESLint
+              run: npm run lint:eslint
+
+    api-tests:
+        name: API tests
+        runs-on: ubuntu-latest
+        needs: quality-checks
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install API dependencies
+              working-directory: module-6-api-tests
+              run: npm ci
+
+            - name: Run API tests
+              working-directory: module-6-api-tests
+              run: npm test
+
+    playwright-tests:
+        name: Playwright tests
+        runs-on: ubuntu-latest
+        needs: quality-checks
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install Playwright dependencies
+              working-directory: module-5-playwright
+              run: npm ci
+
+            - name: Install Playwright browsers
+              working-directory: module-5-playwright
+              run: npx playwright install --with-deps
+
+            - name: Run Playwright tests
+              working-directory: module-5-playwright
+              run: npx playwright test

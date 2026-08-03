@@ -31,3 +31,4 @@ tests/
   cart.spec.js
 
 playwright.config.js
+```

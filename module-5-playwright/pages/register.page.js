@@ -33,7 +33,7 @@ class RegisterPage {
         await this.stateInput.fill(customer.state);
         await this.phoneInput.fill(customer.phone);
         await this.emailInput.fill(customer.email);
-        await this.passwordInput.fill(customer.password)
+        await this.passwordInput.fill(customer.password);
 
         await this.registerButton.click();
     }
