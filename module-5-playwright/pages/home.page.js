@@ -27,11 +27,11 @@ class HomePage {
     }
 
     async filterByCategory(categoryName) {
-        await this.page.getByRole('checkbox', { name: categoryName }).check();
+        await this.categoryCheckbox(categoryName).check();
     }
 
     categoryCheckbox(categoryName) {
-        return this.page.getByRole('checkbox', { name: categoryName });
+        return this.page.getByRole('checkbox', { name: categoryName }).first();
     }
 
     async sortByPriceLowToHigh() {

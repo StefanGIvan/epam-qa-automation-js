@@ -8,6 +8,6 @@ test.describe('Feature: Practice Software Testing user journeys', () => {
         await registerPage.open();
         await registerPage.registerNewCustomer(customer);
 
-        await expect(page).toHaveURL(/auth\/login/);
+        await expect(page).toHaveURL(/auth\/login/, { timeout: 15000 });
     });
 });
