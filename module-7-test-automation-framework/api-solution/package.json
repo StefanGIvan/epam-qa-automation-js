@@ -1,0 +1,12 @@
+{
+    "name": "module-6-api-tests",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "node --test tests/specs/*.test.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": ""
+}

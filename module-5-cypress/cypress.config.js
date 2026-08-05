@@ -7,4 +7,9 @@ module.exports = defineConfig({
         baseUrl: 'https://practicesoftwaretesting.com',
         specPattern: 'cypress/e2e/**/*.spec.js',
     },
+
+    reporter: 'cypress-multi-reporters',
+    reporterOptions: {
+        configFile: 'reporter-config.json',
+    },
 });
