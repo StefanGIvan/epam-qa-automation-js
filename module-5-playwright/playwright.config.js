@@ -7,7 +7,10 @@ module.exports = defineConfig({
 
   retries: 2,
 
-  reporter: 'html',
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+  ],
 
   use: {
     baseURL: 'https://practicesoftwaretesting.com',
