@@ -1,3 +1,5 @@
+const { getRandomEmail } = require('../../core/randomize.utils');
+
 const products = {
     combinationPliers: {
         name: 'Combination Pliers',
@@ -35,7 +37,7 @@ function createCustomer() {
         city: 'Bucharest',
         state: 'Bucharest',
         phone: '0712345678',
-        email: `testuser${timestamp}@mail.com`,
+        email: getRandomEmail(),
         password: `StrongPass-${timestamp}!Aa`,
     };
 }

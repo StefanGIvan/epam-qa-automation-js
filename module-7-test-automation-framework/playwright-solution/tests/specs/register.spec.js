@@ -1,4 +1,4 @@
-const { test, expect } = require('../fixtures/pages.fixtures');
+const { test, expect } = require('../../business/fixtures/pages.fixtures');
 const { createCustomer } = require('../../business/test-data/test-data');
 
 test.describe('Feature: Practice Software Testing user journeys', () => {

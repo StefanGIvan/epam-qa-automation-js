@@ -1,4 +1,4 @@
-const { BasePage } = require('../../core/base.page');
+const { BasePage } = require('./base.page');
 
 class HomePage extends BasePage {
     constructor(page) {
