@@ -1,7 +1,6 @@
-// Page Object for product details page
-// Contains selectors and actions related to viewing product details and adding products to the cart
+import { BasePage } from './base.page.js';
 
-class ProductPage {
+class ProductPage extends BasePage {
     get productName() {
         return $('[data-test="product-name"]');
     }
@@ -18,9 +17,24 @@ class ProductPage {
         return $('[data-test="add-to-cart"]');
     }
 
+    get addToCartSuccessMessage() {
+        return $('.toast-message');
+    }
+
     async addToCart() {
         await this.addToCartButton.waitForDisplayed();
         await this.addToCartButton.click();
+
+        await this.addToCartSuccessMessage.waitForDisplayed({
+            timeout: 10000,
+        });
+    }
+
+    async getUnitPrice() {
+        await this.productPrice.waitForDisplayed();
+
+        const priceText = await this.productPrice.getText();
+        return parseFloat(priceText.replace(/[^0-9.]/g, ''));
     }
 }
 

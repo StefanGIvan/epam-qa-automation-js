@@ -1,7 +1,6 @@
-// Page Object for the Toolshop home page
-// Contains selectors and actions related to product catalog, search, filtering, and sorting
+import { BasePage } from './base.page.js';
 
-class HomePage {
+class HomePage extends BasePage {
     get productCards() {
         return $$('[data-test="product-name"]');
     }
@@ -15,7 +14,7 @@ class HomePage {
     }
 
     async open() {
-        await browser.url('/');
+        await super.open('/');
     }
 
     async waitForProductCatalog() {
@@ -38,8 +37,6 @@ class HomePage {
     }
 
     async openProductByName(productName) {
-        // Finds the product card title
-        // normalize-space() removes extra spaces before/after
         const product = await $(
             `//h5[@data-test="product-name" and normalize-space()="${productName}"]/ancestor::a`
         );
@@ -77,7 +74,7 @@ class HomePage {
 
         for (let i = 0; i < priceElements.length; i++) {
             const priceText = await priceElements[i].getText();
-            prices.push(Number(priceText.replace(/[^0-9.]/g, '')));
+            prices.push(parseFloat(priceText.replace(/[^0-9.]/g, '')));
         }
 
         return prices;
