@@ -73,7 +73,7 @@ test('Scenario: API client can create a booking with valid booking data', async 
     bookingId = body.bookingid;
 });
 
-test ('Scenario: API client can get a created booking by id', async () => {
+test('Scenario: API client can get a created booking by id', async () => {
     assert.ok(bookingId, 'Booking ID should exist before getting booking');
 
     const response = await bookingApi.getBookingById(bookingId);

@@ -1,6 +1,6 @@
 const { BasePage } = require('./base.page');
 
-class CartPage extends BasePage{
+class CartPage extends BasePage {
     constructor(page) {
         super(page);
 

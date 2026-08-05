@@ -2,10 +2,7 @@ const { test, expect } = require('../../business/fixtures/pages.fixtures');
 const { createCustomer } = require('../../business/test-data/test-data');
 
 test.describe('Feature: Practice Software Testing user journeys', () => {
-    test('Scenario: Customer can create a new account', async ({
-        page,
-        registerPage,
-    }) => {
+    test('Scenario: Customer can create a new account', async ({ page, registerPage }) => {
         const customer = createCustomer();
 
         await registerPage.open();

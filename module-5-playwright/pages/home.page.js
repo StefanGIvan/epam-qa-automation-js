@@ -20,18 +20,18 @@ class HomePage {
 
     async openProduct(productName) {
         await this.page
-        // RegExp because the full link name may be not the exact product name
-        .getByRole('link', { name: new RegExp(productName) })
-        .first()
-        .click();
-}
+            // RegExp because the full link name may be not the exact product name
+            .getByRole('link', { name: new RegExp(productName) })
+            .first()
+            .click();
+    }
 
     async filterByCategory(categoryName) {
-        await this.page.getByRole('checkbox', { name: categoryName }).check();
+        await this.categoryCheckbox(categoryName).check();
     }
 
     categoryCheckbox(categoryName) {
-        return this.page.getByRole('checkbox', { name: categoryName });
+        return this.page.getByRole('checkbox', { name: categoryName }).first();
     }
 
     async sortByPriceLowToHigh() {
@@ -41,9 +41,7 @@ class HomePage {
     async getProductPrices() {
         const prices = await this.productPrices.allTextContents();
 
-        return prices.map((price) =>
-        Number(price.replace('$', '').trim())
-        );
+        return prices.map((price) => Number(price.replace('$', '').trim()));
     }
 }
 

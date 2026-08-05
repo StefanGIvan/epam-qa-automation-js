@@ -3,8 +3,8 @@
 
 class HomePage {
     get productCards() {
-            return $$('[data-test="product-name"]');
-        }
+        return $$('[data-test="product-name"]');
+    }
 
     get searchInput() {
         return $('[data-test="search-query"]');
@@ -26,11 +26,11 @@ class HomePage {
             },
             {
                 timeout: 10000,
-                timeoutMsg: 'Expected at least one product to be displayed'
+                timeoutMsg: 'Expected at least one product to be displayed',
             }
         );
     }
-    
+
     async searchForProduct(productName) {
         await this.searchInput.waitForDisplayed();
         await this.searchInput.setValue(productName);
@@ -40,7 +40,9 @@ class HomePage {
     async openProductByName(productName) {
         // Finds the product card title
         // normalize-space() removes extra spaces before/after
-        const product = await $(`//h5[@data-test="product-name" and normalize-space()="${productName}"]/ancestor::a`);
+        const product = await $(
+            `//h5[@data-test="product-name" and normalize-space()="${productName}"]/ancestor::a`
+        );
         await product.waitForDisplayed();
         await product.click();
     }
@@ -70,54 +72,57 @@ class HomePage {
     }
 
     async getProductPrices() {
-    const priceElements = await this.productPrices;
-    const prices = [];
+        const priceElements = await this.productPrices;
+        const prices = [];
 
-    for (let i = 0; i < priceElements.length; i++) {
-        const priceText = await priceElements[i].getText();
-        prices.push(Number(priceText.replace(/[^0-9.]/g, '')));
+        for (let i = 0; i < priceElements.length; i++) {
+            const priceText = await priceElements[i].getText();
+            prices.push(Number(priceText.replace(/[^0-9.]/g, '')));
+        }
+
+        return prices;
     }
-
-    return prices;
-}
 
     async waitForPricesToBeSortedLowToHigh() {
         await browser.waitUntil(
             async () => {
                 const prices = await this.getProductPrices();
 
-                return prices.length > 0 && prices.every((price, index, array) => {
-                    return index === 0 || price >= array [index - 1];
-                });
+                return (
+                    prices.length > 0 &&
+                    prices.every((price, index, array) => {
+                        return index === 0 || price >= array[index - 1];
+                    })
+                );
             },
             {
                 timeout: 10000,
-                timeoutMsg: 'Expected product prices to be sorted from low to high'
+                timeoutMsg: 'Expected product prices to be sorted from low to high',
             }
         );
     }
 
     async waitForProductWithName(productName) {
-    await browser.waitUntil(
-        async () => {
-            const products = await this.productCards;
+        await browser.waitUntil(
+            async () => {
+                const products = await this.productCards;
 
-            for (let i = 0; i < products.length; i++) {
-                const text = await products[i].getText();
+                for (let i = 0; i < products.length; i++) {
+                    const text = await products[i].getText();
 
-                if (text.trim() === productName) {
-                    return true;
+                    if (text.trim() === productName) {
+                        return true;
+                    }
                 }
-            }
 
-            return false;
-        },
-        {
-            timeout: 15000,
-            timeoutMsg: `Expected product "${productName}" to be displayed`
-        }
-    );
-}
+                return false;
+            },
+            {
+                timeout: 15000,
+                timeoutMsg: `Expected product "${productName}" to be displayed`,
+            }
+        );
+    }
 }
 
 export default new HomePage();

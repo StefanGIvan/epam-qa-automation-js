@@ -1,6 +1,6 @@
 const { BasePage } = require('./base.page');
 
-class RegisterPage extends BasePage{
+class RegisterPage extends BasePage {
     constructor(page) {
         super(page);
 

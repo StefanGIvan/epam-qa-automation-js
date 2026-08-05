@@ -1,15 +1,15 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-  allowCypressEnv: false,
+    allowCypressEnv: false,
 
-  e2e: {
-    baseUrl: 'https://practicesoftwaretesting.com',
-    specPattern: 'cypress/e2e/**/*.spec.js',
-  },
+    e2e: {
+        baseUrl: 'https://practicesoftwaretesting.com',
+        specPattern: 'cypress/e2e/**/*.spec.js',
+    },
 
-  reporter: 'cypress-multi-reporters',
-  reporterOptions: {
-    configFile: 'reporter-config.json',
-  },
+    reporter: 'cypress-multi-reporters',
+    reporterOptions: {
+        configFile: 'reporter-config.json',
+    },
 });

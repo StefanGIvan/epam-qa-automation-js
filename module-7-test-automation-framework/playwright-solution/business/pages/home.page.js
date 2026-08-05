@@ -22,11 +22,11 @@ class HomePage extends BasePage {
 
     async openProduct(productName) {
         await this.page
-        // RegExp because the full link name may be not the exact product name
-        .getByRole('link', { name: new RegExp(productName) })
-        .first()
-        .click();
-}
+            // RegExp because the full link name may be not the exact product name
+            .getByRole('link', { name: new RegExp(productName) })
+            .first()
+            .click();
+    }
 
     async filterByCategory(categoryName) {
         await this.page.getByRole('checkbox', { name: categoryName }).check();
@@ -43,9 +43,7 @@ class HomePage extends BasePage {
     async getProductPrices() {
         const prices = await this.productPrices.allTextContents();
 
-        return prices.map((price) =>
-        Number(price.replace('$', '').trim())
-        );
+        return prices.map((price) => Number(price.replace('$', '').trim()));
     }
 }
 

@@ -4,11 +4,7 @@ const assert = require('node:assert/strict');
 const { AuthApi } = require('../api/auth.api');
 const { BookingApi } = require('../api/booking.api');
 
-const {
-    authData,
-    bookingData,
-    updateBookingData,
-} = require('../test-data/booking.data');
+const { authData, bookingData, updateBookingData } = require('../test-data/booking.data');
 
 const authApi = new AuthApi();
 const bookingApi = new BookingApi();
@@ -71,7 +67,7 @@ test('Scenario: API client can create a booking with valid booking data', async 
     bookingId = body.bookingid;
 });
 
-test ('Scenario: API client can get a created booking by id', async () => {
+test('Scenario: API client can get a created booking by id', async () => {
     assert.ok(bookingId, 'Booking ID should exist before getting booking');
 
     const response = await bookingApi.getBookingById(bookingId);

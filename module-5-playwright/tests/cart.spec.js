@@ -19,6 +19,8 @@ test.describe('Feature: Practice Software Testing user journeys', () => {
 
         await expect(cartPage.productByName(product.name)).toBeVisible();
         await expect(cartPage.quantityInput(product.name)).toHaveValue(product.expectedQuantity);
-        await expect(cartPage.lineTotalForProduct(product.name)).toHaveText(product.expectedLinePrice);
+        await expect(cartPage.lineTotalForProduct(product.name)).toHaveText(
+            product.expectedLinePrice
+        );
     });
 });
