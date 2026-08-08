@@ -1,39 +1,39 @@
-            - name: Start Practice Software Testing app
-              working-directory: module-12-bdd-cucumber
-              run: docker compose up -d
+- name: Start Practice Software Testing app
+  working-directory: module-12-bdd-cucumber
+  run: docker compose up -d
 
-            - name: Show Docker containers
-              working-directory: module-12-bdd-cucumber
-              run: docker compose ps
+- name: Show Docker containers
+  working-directory: module-12-bdd-cucumber
+  run: docker compose ps
 
-            - name: Show Docker logs
-              working-directory: module-12-bdd-cucumber
-              run: docker compose logs --tail=80
+- name: Show Docker logs
+  working-directory: module-12-bdd-cucumber
+  run: docker compose logs --tail=80
 
-            - name: Seed Practice Software Testing database
-              working-directory: module-12-bdd-cucumber
-              run: docker compose exec -T laravel-api php artisan migrate:fresh --seed
+- name: Seed Practice Software Testing database
+  working-directory: module-12-bdd-cucumber
+  run: docker compose exec -T laravel-api php artisan migrate:fresh --seed
 
-            - name: Wait for Practice Software Testing app
-              run: |
-                  for i in {1..30}; do
-                      if curl -s http://localhost:4200 > /dev/null; then
-                          echo "Practice Software Testing UI is ready"
-                          exit 0
-                      fi
-                      echo "Waiting for app..."
-                      sleep 5
-                  done
-                  echo "App did not become ready in time"
-                  exit 1
+- name: Wait for Practice Software Testing app
+  run: |
+      for i in {1..30}; do
+          if curl -s http://localhost:4200 > /dev/null; then
+              echo "Practice Software Testing UI is ready"
+              exit 0
+          fi
+          echo "Waiting for app..."
+          sleep 5
+      done
+      echo "App did not become ready in time"
+      exit 1
 
-            - name: Run Cucumber UI tests
-              working-directory: module-12-bdd-cucumber
-              env:
-                  BASE_URL: http://localhost:4200
-              run: npm run test:cucumber:ui
+- name: Run Cucumber UI tests
+  working-directory: module-12-bdd-cucumber
+  env:
+      BASE_URL: http://localhost:4200
+  run: npm run test:cucumber:ui
 
-            - name: Stop Practice Software Testing app
-              if: always()
-              working-directory: module-12-bdd-cucumber
-              run: docker compose down -v
+- name: Stop Practice Software Testing app
+  if: always()
+  working-directory: module-12-bdd-cucumber
+  run: docker compose down -v
