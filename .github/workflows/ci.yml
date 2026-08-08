@@ -93,8 +93,18 @@ jobs:
               working-directory: module-12-bdd-cucumber
               run: docker compose up -d
 
-            - name: Wait for app containers
-              run: sleep 45
+            - name: Wait for Practice Software Testing app
+              run: |
+                  for i in {1..30}; do
+                      if curl -s http://localhost:8091 > /dev/null; then
+                          echo "Practice Software Testing app is ready"
+                          exit 0
+                      fi
+                      echo "Waiting for app..."
+                      sleep 5
+                  done
+                  echo "App did not become ready in time"
+                  exit 1
 
             - name: Seed Practice Software Testing database
               working-directory: module-12-bdd-cucumber
@@ -103,7 +113,7 @@ jobs:
             - name: Run Cucumber UI tests
               working-directory: module-12-bdd-cucumber
               env:
-                  BASE_URL: http://localhost:4200
+                  BASE_URL: http://localhost:8091
               run: npm run test:cucumber:ui
 
             - name: Stop Practice Software Testing app
