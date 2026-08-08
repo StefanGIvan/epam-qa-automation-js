@@ -4,7 +4,12 @@ class BasePage {
     }
 
     async open(path = '/') {
-        await this.page.goto(path);
+        const baseUrl = process.env.BASE_URL || 'https://practicesoftwaretesting.com';
+        const url = new URL(path, baseUrl).toString();
+
+        await this.page.goto(url, {
+            waitUntil: 'domcontentloaded',
+        });
     }
 
     async getCurrentUrl() {

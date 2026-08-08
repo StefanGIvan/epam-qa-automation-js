@@ -91,4 +91,6 @@ jobs:
 
             - name: Run Cucumber UI tests
               working-directory: module-12-bdd-cucumber
+              env:
+                  BASE_URL: https://practicesoftwaretesting.com
               run: npm run test:cucumber:ui

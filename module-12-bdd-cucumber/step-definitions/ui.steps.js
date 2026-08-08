@@ -14,8 +14,7 @@ Given('the customer is on the registration page', async function () {
 Then('the product catalog should be displayed', async function () {
     const productCards = this.page.locator('[data-test="product-name"]');
 
-    await expect(productCards.first()).toBeVisible();
-    await expect(productCards).not.toHaveCount(0);
+    await expect(productCards.first()).toBeVisible({ timeout: 30000 });
 });
 
 When('the customer submits valid registration data', async function () {

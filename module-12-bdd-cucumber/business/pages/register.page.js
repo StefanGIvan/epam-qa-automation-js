@@ -21,6 +21,7 @@ class RegisterPage extends BasePage {
 
     async open() {
         await super.open('/auth/register');
+        await this.firstNameInput.waitFor({ state: 'visible', timeout: 30000 });
     }
 
     async registerNewCustomer(customer) {

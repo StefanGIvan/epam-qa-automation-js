@@ -13,6 +13,7 @@ class HomePage extends BasePage {
 
     async open() {
         await super.open('/');
+        await this.searchInput.waitFor({ state: 'visible', timeout: 30000 });
     }
 
     async searchForProduct(productName) {
