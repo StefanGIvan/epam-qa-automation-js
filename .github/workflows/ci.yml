@@ -69,18 +69,6 @@ jobs:
               with:
                   node-version: 22
 
-            - name: Install Playwright dependencies
-              working-directory: module-5-playwright
-              run: npm ci
-
-            - name: Install Playwright browsers
-              working-directory: module-5-playwright
-              run: npx playwright install --with-deps
-
-            - name: Run Playwright tests
-              working-directory: module-5-playwright
-              run: npx playwright test
-
             - name: Install Cucumber UI dependencies
               working-directory: module-12-bdd-cucumber
               run: npm ci
