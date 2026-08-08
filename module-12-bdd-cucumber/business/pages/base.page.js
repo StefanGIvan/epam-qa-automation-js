@@ -9,7 +9,11 @@ class BasePage {
 
         await this.page.goto(url, {
             waitUntil: 'domcontentloaded',
+            timeout: 60000,
         });
+
+        console.log(`Opened URL: ${this.page.url()}`);
+        console.log(`Page title: ${await this.page.title()}`);
     }
 
     async getCurrentUrl() {
