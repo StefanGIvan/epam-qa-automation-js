@@ -5,15 +5,15 @@ class BasePage {
 
     async open(path = '/') {
         const baseUrl = process.env.BASE_URL || 'https://practicesoftwaretesting.com';
-        const url = new URL(path, baseUrl).toString();
+        const normalizedBaseUrl = baseUrl.replace(/\/$/, '');
+        const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+
+        const url = new URL(normalizedPath, normalizedBaseUrl).toString();
 
         await this.page.goto(url, {
             waitUntil: 'domcontentloaded',
             timeout: 60000,
         });
-
-        console.log(`Opened URL: ${this.page.url()}`);
-        console.log(`Page title: ${await this.page.title()}`);
     }
 
     async getCurrentUrl() {
