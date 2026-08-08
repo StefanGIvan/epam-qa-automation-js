@@ -1,0 +1,17 @@
+{
+    "name": "module-12-bdd-cucumber",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test:cucumber:ui": "cucumber-js --tags \"@ui\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "@cucumber/cucumber": "^13.2.1",
+        "@playwright/test": "^1.61.1",
+        "@types/node": "^26.0.1"
+    }
+}

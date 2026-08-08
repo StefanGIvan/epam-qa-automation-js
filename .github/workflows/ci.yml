@@ -80,3 +80,15 @@ jobs:
             - name: Run Playwright tests
               working-directory: module-5-playwright
               run: npx playwright test
+
+            - name: Install Cucumber UI dependencies
+              working-directory: module-12-bdd-cucumber
+              run: npm ci
+
+            - name: Install Cucumber UI browser
+              working-directory: module-12-bdd-cucumber
+              run: npx playwright install --with-deps chromium
+
+            - name: Run Cucumber UI tests
+              working-directory: module-12-bdd-cucumber
+              run: npm run test:cucumber:ui
