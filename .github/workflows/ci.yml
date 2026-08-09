@@ -89,6 +89,9 @@ jobs:
               working-directory: module-12-bdd-cucumber
               run: npx playwright install --with-deps chromium
 
+            - name: Set up Docker QEMU
+              uses: docker/setup-qemu-action@v3
+
             - name: Start Practice Software Testing app
               working-directory: module-12-bdd-cucumber
               run: docker compose up -d
