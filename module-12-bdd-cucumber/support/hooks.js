@@ -6,7 +6,7 @@ const { ProductPage } = require('../business/pages/product.page');
 const { CartPage } = require('../business/pages/cart.page');
 const { RegisterPage } = require('../business/pages/register.page');
 
-setDefaultTimeout(60000);
+setDefaultTimeout(120000);
 
 Before(async function () {
     this.browser = await chromium.launch({

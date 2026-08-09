@@ -124,7 +124,7 @@ jobs:
             - name: Run Cucumber UI tests
               working-directory: module-12-bdd-cucumber
               env:
-                  BASE_URL: http://localhost:8091
+                  BASE_URL: http://localhost:4200
               run: npm run test:cucumber:ui
 
             - name: Stop Practice Software Testing app
