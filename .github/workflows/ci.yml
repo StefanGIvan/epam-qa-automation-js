@@ -93,6 +93,14 @@ jobs:
               working-directory: module-12-bdd-cucumber
               run: docker compose up -d
 
+            - name: Show Docker containers
+              working-directory: module-12-bdd-cucumber
+              run: docker compose ps
+
+            - name: Show Docker logs
+              working-directory: module-12-bdd-cucumber
+              run: docker compose logs --tail=100
+
             - name: Wait for Practice Software Testing app
               run: |
                   for i in {1..30}; do
