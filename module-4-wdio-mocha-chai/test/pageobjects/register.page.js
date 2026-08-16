@@ -1,7 +1,6 @@
-// Page Object for the registration page
-// Contains selectors and actions needed to create a new customer account
+import { BasePage } from './base.page.js';
 
-class RegisterPage {
+class RegisterPage extends BasePage {
     get firstNameInput() {
         return $('[data-test="first-name"]');
     }
@@ -55,7 +54,7 @@ class RegisterPage {
     }
 
     async open() {
-        await browser.url('/auth/register');
+        await super.open('/auth/register');
     }
 
     async registerNewCustomer(customer) {

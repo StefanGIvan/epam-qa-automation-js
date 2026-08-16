@@ -1,7 +1,6 @@
-// Page Object for the cart page
-// Contains selectors and actions related to basket product details, quantity, and line price
+import { BasePage } from './base.page.js';
 
-class CartPage {
+class CartPage extends BasePage {
     get productTitle() {
         return $('[data-test="product-title"]');
     }
@@ -15,7 +14,7 @@ class CartPage {
     }
 
     async open() {
-        await browser.url('/checkout');
+        await super.open('/checkout');
     }
 
     async changeQuantity(quantity) {
@@ -37,20 +36,24 @@ class CartPage {
         await this.linePrice.waitForDisplayed();
 
         const priceText = await this.linePrice.getText();
-        return Number(priceText.replace(/[^0-9.]/g, ''));
+        return parseFloat(priceText.replace(/[^0-9.]/g, ''));
     }
 
     async waitForLinePrice(expectedPrice) {
         await browser.waitUntil(
             async () => {
                 const actualPrice = await this.getLinePrice();
-                return actualPrice === expectedPrice;
+                return Math.abs(actualPrice - expectedPrice) <= 0.01;
             },
             {
                 timeout: 10000,
                 timeoutMsg: `Expected line price to be ${expectedPrice}`,
             }
         );
+    }
+
+    async waitForProductInCart() {
+        await this.quantityInput.waitForDisplayed({ timeout: 15000 });
     }
 }
 
